@@ -28,7 +28,15 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 //    serverOptions.ListenAnyIP(38791); // Cambia a ListenAnyIP para asegurarte de que pueda aceptar peticiones externas
 //});
 
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 
@@ -58,6 +66,7 @@ app.UseSwagger();
 // app.UseHttpsRedirection();
 app.UseDeveloperExceptionPage();
 app.UseAuthentication();
+app.UseCors("AllowAll");
 app.UseAuthorization();
 
 app.MapControllers();

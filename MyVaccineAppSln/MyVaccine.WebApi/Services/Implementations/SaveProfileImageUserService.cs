@@ -59,6 +59,12 @@ namespace MyVaccine.WebApi.Services.Implementations
             {
                 throw new Exception("User not found");
             }
+
+            if (string.IsNullOrWhiteSpace(user.Photo))
+            {
+                return (false, null);
+            }
+            
             var absolutePath = Path.Combine(Directory.GetCurrentDirectory(), user.Photo);
 
             if (File.Exists(absolutePath))
